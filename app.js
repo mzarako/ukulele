@@ -6,7 +6,7 @@ $(function() {
 function getDataFromApi() {
   //var Hooktheory_URL = 'https://api.hooktheory.com/v1/users/auth';
   var params = {
-    url: 'https://api.hooktheory.com/v1/',
+    url: 'https://api.hooktheory.com/v1/users/auth',
     type: 'POST',
     accepts: 'application/json',
     contentType: 'application/json',
