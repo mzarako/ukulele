@@ -4,9 +4,10 @@ $(function() {
 });
 
 function getDataFromApi() {
-  //var Hooktheory_URL = 'https://api.hooktheory.com/v1/';
+  //var Hooktheory_URL = 'https://api.hooktheory.com/v1/users/auth';
   var params = {
     url: 'https://api.hooktheory.com/v1/',
+    type: 'POST',
     accepts: 'application/json',
     contentType: 'application/json',
     username: 'jdobrowner',
