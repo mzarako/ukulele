@@ -1,0 +1,19 @@
+{
+  "name": "ukelele",
+  "version": "1.0.0",
+  "description": "\"test of tonejs\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdobrowner/ukelele.git"
+  },
+  "author": "Jason Dobrowner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdobrowner/ukelele/issues"
+  },
+  "homepage": "https://github.com/jdobrowner/ukelele#readme"
+}
