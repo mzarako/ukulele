@@ -1,45 +1,7 @@
-// $(function() {
-  //console.log('loaded');
-  //getDataFromApi();
-  //makeSounds();
-// });
+$(function() {
+  // makeSounds();
+});
 
-/*function getDataFromApi(uName, pWord) {
-  //var Hooktheory_URL = 'https://api.hooktheory.com/v1/users/auth';
-  var params = {
-    url: 'https://api.hooktheory.com/v1/users/auth',
-    type: 'POST',
-    accepts: 'application/json',
-    contentType: 'application/json',
-    username: uName,
-    password: pWord
-  }
-    success: function(result) {
-      console.log(result);
-    }
-  }
-    $.ajax(params);
-
-/*
-    import requests
-
-header = {"Accept": "application/json",
-          "Content-Type": "application/json",
-          "username":"kingzack",
-          "password": "forggettaboudit"}
-
-
-url = "https://api.hooktheory.com/v1/users/auth"
-r = requests.post(url, data=header)
-print r.json()
-Out[10]:
-          {u'activkey': u'XXXXXXXXXXXXXXXXXXXX',
-           u'id': 6969696969,
-           u'username': u'kingzack'}
-
-
-  }
-  */
 
 function makeSounds() {
   /*
@@ -102,76 +64,35 @@ function makeSounds() {
 }
 
 
-/*
 
 
-$(function() { var apikey = ""; var API_URL = "https://api.hooktheory.com/v1/";
-var theData = JSON.stringify({ username: 'jdobrowner', password: 'Kepler22b' });
-console.log('loaded'); initApi();
-function initApi() { //var Hooktheory_URL = 'https://api.hooktheory.com/v1/users/auth';
-var params = { url: API_URL + 'users/auth', type: 'POST', contentType: 'application/json', dataType: 'json', data: theData, success: function(result) { apikey = result.activkey; console.log(result); console.log(apikey);
-  getData();
 
-},
-error: function (xhr, ajaxOptions, thrownError) {
-   console.log(xhr.status);
-   console.log(thrownError);
-}
-} $.ajax(params); }
-function getData() { var params = { url: API_URL + 'trends/nodes?cp=4', type: 'GET', contentType: 'application/json', dataType: 'json', beforeSend: function (xhr){ xhr.setRequestHeader('Authorization', "Bearer " + apikey); }, success: function(result) { console.log(result);
-  }
-}
-  $.ajax(params);
-}
-});
-*/
+//----------------------------------------------------------- final successful version of getData
 
-
-//-----------------------------------------------------------final successful version
-
-$(function() { 
-  var apikey = ""; 
+function getChordSuggestions( chordProgression ) { 
+  var apikey = "2fd30e2ad4916c25122f3bb604b26d11"; 
   var API_URL = "https://api.hooktheory.com/v1/";
-  var theData = JSON.stringify({ username: 'jdobrowner', password: 'Kepler22b' });
-  console.log('loaded'); 
-  var apiRequest = initApi();
-  apiRequest.then(function(result) { 
-    apikey = result.activkey; 
-    console.log(result); 
-    console.log(apikey);
-    getData();
-  });
+  var chordSuggestions = [];
 
-  function initApi() { //var Hooktheory_URL = 'https://api.hooktheory.com/v1/users/auth';
   var params = { 
-    url: API_URL + 'users/auth', 
-    type: 'POST', 
-    contentType: 'application/json', 
-    dataType: 'json', data: theData, 
-    error: function (xhr, ajaxOptions, thrownError) { 
-      console.log(xhr.status); 
-      console.log(thrownError); 
-    } 
-  } 
-  return $.ajax(params); 
-}
-
-function getData() { 
-  var params = { 
-    url: API_URL + 'trends/nodes?cp=4', 
+    url: API_URL + 'trends/nodes?cp=' + chordProgression, 
     type: 'GET', 
     contentType: 'application/json', 
     dataType: 'json', 
     beforeSend: function (xhr){ 
       xhr.setRequestHeader('Authorization', "Bearer " + apikey); 
     }, 
-    success: function(result) { console.log(result);
+    success: function(result) { 
+      displayChordSuggestions(result);
+    }
   }
-}
 $.ajax(params);
 }
-});
 
+function displayChordSuggestions(result) {
+  var array = result.slice(0,12);
+  console.log(array);
+}
 
 
 
