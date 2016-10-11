@@ -4,20 +4,6 @@ $(function() {
 
 
 function makeSounds() {
-  /*
-  var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  var oscillator = audioCtx.createOscillator();
-  var gainNode = audioCtx.createGain();
-  oscillator.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  oscillator.type = 'sine'; // sine wave — other values are 'square', 'sawtooth', 'triangle' and 'custom'
-  gainNode.gain.value = 0.2;
-
-  $('button').click( function(e) {
-    console.log('click');
-    oscillator.frequency.value = 200; // value in hertz
-    oscillator.start();
-    */
 
     var uke1 = new Tone.Synth({
       oscillator : {
@@ -95,6 +81,85 @@ function displayChordSuggestions(result) {
 }
 
 
+//------------------ get major and minor scale array for any root note ---------------------------
+function majorScale(root) { return [0,2,4,5,7,9,11].map( num => num + root ); }
+function minorScale(root) { return [0,2,3,5,7,8,10].map( num => num + root ); }
+
+//-------------get all chords in the library that matches a key numeral --------------------------
+function getNthChords(scale) {
+  return function(numeral) {
+    var n = numeral - 1;
+    var nChords = chordLibrary.filter( function(chord) {
+      if ( chord.rootNum !== scale[n]) return false;
+      for (var i = 0; i < 4; i++) {
+        if ( !scale.includes(chord.tones[i]%12)) return false;
+      }
+      return true;
+    });
+    return nChords;
+  }
+}
+
+//---------------- get all dominat chords of any key root --------------------------
+function get5thChords(keyRoot) {
+  var fifth = (keyRoot + 7) % 12;
+  var fiveChords = chordLibrary.filter( function(chord) {
+    if ( chord.rootNum !== fifth) return false;
+    for (var i = 0; i < 4; i++) {
+      if ( ![0,2,4,5,7,9,10].includes(chord.tones[i]%12)) return false;
+    }
+  });
+  return fiveChords;
+}
+
+//-------------- make a collection of all chords within a given key ------------------
+function getAllChordsInKey(root) {
+
+  var thisKey, thisScale;
+  if ( ukuleleApp.isInMajorKey ) {
+    thisScale = majorScale(root)
+    thisKey = getNthChords(thisScale);
+  }
+  else {
+    thisScale = minorScale(root)
+    thisKey = getNthChords(thisScale);
+  }
+
+  var i = thisKey(1);
+  var ii = thisKey(2);
+  var iii = thisKey(3);
+  var iv = thisKey(4);
+  var v = get5thChords(root);
+  var vi = thisKey(6);
+  var vii = thisKey(7);
+  var d2 = get5thChords(thisScale[1]);
+  var d3 = get5thChords(thisScale[2]);
+  var d4 = get5thChords(thisScale[3]);
+  var d5 = get5thChords(thisScale[4]);
+  var d6 = get5thChords(thisScale[5]);
+
+  return [i, ii, iii, iv, v, vi, vii, d2, d3, d4, d5, d6];
+}
+
+
+//-------------- display chords of certain numeral in key -------------------------
+function displayChords(keyRoot) {
+  var chords = getAllChordsInKey(keyRoot);
+
+  console.log('I chords: ' + chords[0]);
+  console.log('ii chords: ' + chords[1]);
+  console.log('iii chords: ' + chords[2]);
+  console.log('IV chords: ' + chords[3]);
+  console.log('V chords: ' + chords[4]);
+  console.log('vi chords: ' + chords[5]);
+  console.log('vii chords: ' + chords[6]);
+  console.log('D2 chords: ' + chords[7]);
+  console.log('D3 chords: ' + chords[8]);
+  console.log('D4 chords: ' + chords[9]);
+  console.log('D5 chords: ' + chords[10]);
+  console.log('D6 chords: ' + chords[11]);
+
+}
 
 
 
