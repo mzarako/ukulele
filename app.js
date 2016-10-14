@@ -71,6 +71,10 @@ function getChordSuggestions( chordProgression ) {
     success: function(result) { 
       displayChordSuggestions(result);
     }
+    error: function (xhr, ajaxOptions, thrownError) { 
+      alert(xhr.status); 
+      alert(thrownError); 
+    }
   }
 $.ajax(params);
 }
